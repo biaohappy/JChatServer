@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xiaobiao.jchatserver.mapper.UserMapper">
+    <resultMap id="BaseResultMap" type="com.xiaobiao.jchatserver.result.UserResult">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="usercode" property="userCode" jdbcType="VARCHAR"/>
+        <result column="username" property="userName" jdbcType="VARCHAR"/>
+        <result column="password" property="password" jdbcType="VARCHAR"/>
+        <result column="salt" property="salt" jdbcType="VARCHAR"/>
+        <result column="locked" property="locked" jdbcType="CHAR"/>
+        <result column="createtime" property="createTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+    id, usercode, username, password, salt, locked,createtime
+    </sql>
+
+    <sql id="Base_Select_List">
+        <where>
+            <if test="id != null">
+                and id = #{id,jdbcType=VARCHAR}
+            </if>
+            <if test="userCode != null">
+                and usercode = #{userCode,jdbcType=VARCHAR}
+            </if>
+            <if test="userName != null">
+                and username = #{userName,jdbcType=VARCHAR}
+            </if>
+            <if test="password != null">
+                and password = #{password,jdbcType=VARCHAR}
+            </if>
+            <if test="salt != null">
+                and salt = #{salt,jdbcType=VARCHAR}
+            </if>
+            <if test="locked != null">
+                and locked = #{locked,jdbcType=CHAR}
+            </if>
+            <if test="createTime != null">
+                and createtime = #{createTime,jdbcType=TIMESTAMP}
+            </if>
+        </where>
+    </sql>
+
+    <select id="selectUserInfo" resultMap="BaseResultMap" parameterType="com.xiaobiao.jchatserver.param.UserParam">
+        select
+        <include refid="Base_Column_List"/>
+        from t_user
+        <include refid="Base_Select_List"/>
+    </select>
+
+    <select id="selectUserList" resultMap="BaseResultMap" parameterType="com.xiaobiao.jchatserver.param.UserParam">
+        select
+        <include refid="Base_Column_List"/>
+        from t_user
+        <include refid="Base_Select_List"/>
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+    <insert id="insertSelective" parameterType="com.xiaobiao.jchatserver.param.UserParam">
+        insert into t_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="userCode != null">
+                usercode,
+            </if>
+            <if test="userName != null">
+                username,
+            </if>
+            <if test="password != null">
+                password,
+            </if>
+            <if test="salt != null">
+                salt,
+            </if>
+            <if test="locked != null">
+                locked,
+            </if>
+            <if test="createTime != null">
+                createtime,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="userCode != null">
+                #{userCode,jdbcType=VARCHAR},
+            </if>
+            <if test="userName != null">
+                #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="salt != null">
+                #{salt,jdbcType=VARCHAR},
+            </if>
+            <if test="locked != null">
+                #{locked,jdbcType=CHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.xiaobiao.jchatserver.param.UserParam">
+        update t_user
+        <set>
+            <if test="userCode != null">
+                usercode = #{userCode,jdbcType=VARCHAR},
+            </if>
+            <if test="userName != null">
+                username = #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                password = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="salt != null">
+                salt = #{salt,jdbcType=VARCHAR},
+            </if>
+            <if test="locked != null">
+                locked = #{locked,jdbcType=CHAR},
+            </if>
+            <if test="createTime != null">
+                createtime = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+</mapper>
